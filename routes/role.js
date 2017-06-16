@@ -5,28 +5,37 @@ require('mongoose-query-paginate');
 var roleModel = require('../models/role.js');
 
 var roleObj = {
-
-
     get: function (req, res) {
 
-        res.json({
-            "message": "Hi from Role"
+        roleModel.find({}, function (error, result) {
+            if (error) {
+                throw new Error('Error in creating role ' + error);
+            }
+            else {
+                return res.json({
+                    "result": result
+                });
+
+            }
+
         });
 
     },
     create: function (req, res) {
 
-        var roleboj = roleModel({
-            name: req.query.name
+        var roleObj = roleModel({
+            name: req.body.name
         });
 
-        roleModel.create(roleboj, function (err, result) {
-            if (err) {
-                console.log(err);
+        roleModel.create(roleObj, function (error, result) {
+            if (error) {
+                throw new Error('Error in creating role ' + error);
             }
+            res.status(201);
             return res.json({
-                "message": "Hi from Role",
-                "result": result
+                "message": "role has been created successfully",
+                "status": "200",
+                "success": true,
             });
 
         });
