@@ -7,13 +7,32 @@ var roleModel = require('../models/role.js');
 var roleObj = {
 
 
-   get:function(req,res){
+    get: function (req, res) {
 
-       res.json({
-          "message":"Hi from Role"
-       });
+        res.json({
+            "message": "Hi from Role"
+        });
 
-   }
+    },
+    create: function (req, res) {
+
+        var roleboj = roleModel({
+            name: req.query.name
+        });
+
+        roleModel.create(roleboj, function (err, result) {
+            if (err) {
+                console.log(err);
+            }
+            return res.json({
+                "message": "Hi from Role",
+                "result": result
+            });
+
+        });
+
+
+    }
 
 
 

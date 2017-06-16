@@ -15,5 +15,6 @@ router.post('/api/v1/user', user.create);
 router.get('/api/v1/user', user.getUsers);
 
 router.get('/api/v1/role', role.get);
+router.post('/api/v1/role', role.create);
 
 module.exports = router;
