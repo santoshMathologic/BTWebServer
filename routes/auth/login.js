@@ -2,7 +2,7 @@
 var mongoose = require('mongoose');
 var q = require('q');
 require('mongoose-query-paginate');
-var userModel = require('../models/user.js');
+var userModel = require('../../models/user.js');
 var auth = require('basic-auth');
 
 exports.userLogin = function (req, res) {

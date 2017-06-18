@@ -3,8 +3,8 @@ var router = express.Router();
 
 var user = require("./user.js");
 var role = require("./role.js");
-var login = require("./login.js");
-var reg = require("./login.js");
+var login = require("./auth/login.js");
+var reg = require("./auth/login.js");
 
 /* GET home page. */
 router.get('/', function(req, res, next) {

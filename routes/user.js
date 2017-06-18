@@ -26,7 +26,7 @@ var newuserObj = {
             page: parseInt(req.query.page) || 1,
             username: req.query.username
         };
-        var query = userModel.find({});
+        var query = userModel.find({}).populate('roleId');
         query.paginate(options, function (err, result) {
             if (err) return err;
             else {
