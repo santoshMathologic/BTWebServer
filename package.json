@@ -16,6 +16,7 @@
     "serve-favicon": "~2.3.0"
   },
   "devDependencies": {
+    "mocha": "^3.4.2",
     "mongodb": "^2.2.28",
     "mongoose": "^4.10.6",
     "mongoose-double": "0.0.1",
