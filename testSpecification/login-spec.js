@@ -22,7 +22,8 @@ describe("login function", function () {
             }
         }, function (error, response, body) {
             console.log('body : ', body);
-            
+             expect(body).toBe("login successfully");
+             done();
         });
 
 

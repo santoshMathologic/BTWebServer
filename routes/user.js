@@ -7,7 +7,8 @@ var newuserObj = {
 
         var userobj = new userModel({
             username: req.body.username, 
-            password: req.body.password
+            password: req.body.password,
+            roleId: req.body.roleId
         });
 
         userModel.create(userobj, function (err, result) {
