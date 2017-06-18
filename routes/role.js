@@ -7,14 +7,19 @@ var roleModel = require('../models/role.js');
 var roleObj = {
     get: function (req, res) {
 
-        roleModel.find({}, function (error, result) {
+        var options = {
+            perPage: parseInt(req.query.limit) || 10,
+            page: parseInt(req.query.page) || 1,
+
+        };
+
+        var query = roleModel.find({});
+        query.paginate(options, function (error, result) {
             if (error) {
                 throw new Error('Error in creating role ' + error);
             }
             else {
-                return res.json({
-                    "result": result
-                });
+                return res.json(result);
 
             }
 
@@ -42,9 +47,5 @@ var roleObj = {
 
 
     }
-
-
-
-
 };
 module.exports = roleObj;
