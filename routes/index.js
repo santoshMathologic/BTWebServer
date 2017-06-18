@@ -15,7 +15,7 @@ router.get('/', function(req, res, next) {
  * login routes 
  */
 router.post('/login', login.userLogin);
-router.post('/registeration', reg.registration);
+router.post('/registeration', reg.registerUser);
 
 router.post('/api/v1/user', user.create);
 
