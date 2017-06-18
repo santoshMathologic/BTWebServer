@@ -8,5 +8,7 @@ exports.userLogin = function(req,res){
 
 console.log(req);
 
+return res.json("login successfully");
+
 
 };
