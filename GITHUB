@@ -48,5 +48,5 @@ Santosh@123
 
 >git add ./   : add all the files 
 >git status    : Check the status 
->git comment -m "your_comment" : add your comment 
+>git commit -m "your_comment" : add your comment 
 >git push origin master :  add modified files to the respository
