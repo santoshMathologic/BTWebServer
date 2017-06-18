@@ -4,6 +4,7 @@ var router = express.Router();
 var user = require("./user.js");
 var role = require("./role.js");
 var login = require("./login.js");
+var reg = require("./login.js");
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
@@ -14,6 +15,7 @@ router.get('/', function(req, res, next) {
  * login routes 
  */
 router.post('/login', login.userLogin);
+router.post('/registeration', reg.registration);
 
 router.post('/api/v1/user', user.create);
 

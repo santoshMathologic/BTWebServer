@@ -3,12 +3,23 @@ var mongoose = require('mongoose');
 var q = require('q');
 require('mongoose-query-paginate');
 var roleModel = require('../models/role.js');
+var auth = require('basic-auth');
 
-exports.userLogin = function(req,res){
+exports.userLogin = function (req, res) {
 
-console.log(req);
+    var credentials = auth(req);
+    if (credentials !== null || credentials.name) {
+        if (credentials.name === 'test' && credentials.pass === 'test') {
+            return res.json("login successfully");
+        } else
+            return res.json("login Unsuccessfully");
+    }else
+         throw new Error('username and pass not found ' + credentials);
+    
+};
 
-return res.json("login successfully");
+exports.registration = function(req,res){
 
+console.log(req.body);
 
 };
