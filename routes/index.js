@@ -15,13 +15,22 @@ router.get('/', function(req, res, next) {
  * login routes 
  */
 router.get('/login', login.userLogin);
+
+// registration routes
 router.post('/registeration', reg.registerUser);
 
+// users routes
 router.post('/api/v1/user', user.create);
 
 router.get('/api/v1/user', user.getUsers);
 
+// roles routes
 router.get('/api/v1/role', role.get);
 router.post('/api/v1/role', role.create);
+
+// upload routes
+
+app.post('/upload', [Multer({dest:'./uploads'}), parseFile]);
+
 
 module.exports = router;

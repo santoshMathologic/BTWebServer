@@ -7,6 +7,7 @@ var bodyParser = require('body-parser');
 
 var index = require('./routes/index');
 var config = require('./config/config'); // get our config file
+var validation = require('./middlewares/validationMiddleware'); // get our config file
 
 
 var db = require("./database/db");
@@ -28,6 +29,7 @@ app.set('superSecret', config.secret); // secret variable
 
 app.use('/', index);
 
+//app.use(validation({ option1: '1', option2: '2' }))
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -42,7 +44,7 @@ var port = normalizePort(raw_port || '4000');
 app.set('port', port);
 
 var server=app.listen(port, function () {
-  console.log('Server listening on url: http://localhost:'+port);
+  console.log('Server running at http://127.0.0.1:'+port);
 });
 
 function normalizePort(val) {
