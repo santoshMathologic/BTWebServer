@@ -6,7 +6,7 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 
 var index = require('./routes/index');
-var config = require('./config'); // get our config file
+var config = require('./config/config'); // get our config file
 
 
 var db = require("./database/db");
