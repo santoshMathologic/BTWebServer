@@ -10,7 +10,10 @@ var login = require("./auth/login.js");
 var reg = require("./auth/login.js");
 var upload = require("./upload.js");
 
-var uploadDest = Multer({ dest: './uploads' });
+var uploadDest = Multer({ 
+                dest: './uploads' 
+                
+            });
 /* GET home page. */
 router.get('/', function(req, res, next) {
   res.render('index', { title: 'Express' });
