@@ -6,7 +6,7 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 
 var index = require('./routes/index');
-
+var config = require('./config'); // get our config file
 
 
 var db = require("./database/db");
@@ -24,6 +24,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+app.set('superSecret', config.secret); // secret variable
 
 app.use('/', index);
 

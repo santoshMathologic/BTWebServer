@@ -12,7 +12,24 @@ exports.userLogin = function (req, res) {
         validate(credentials.name, credentials.pass).then(function (result) {
 
             if (credentials.name === result.name && credentials.pass === result.pass) {
-                return res.json("login successfully");
+                
+             resultVal =   {
+  "status": 400,
+  "statusText": "Bad Request",
+  "errors": [
+    {
+      "field": "password",
+      "location": "body",
+      "messages": [
+        "the value of password is not allowed to be empty",
+        "the value of password must match the regular expression /[a-zA-Z0-9]{3,30}/"
+      ],
+      "types": [ "any.empty", "string.regex.base" ]
+    }
+  ]
+}
+                
+                return res.json(resultVal);
             } else
                 return res.json("login Unsuccessfully");
 

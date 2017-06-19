@@ -1,6 +1,6 @@
 
 
-var logIn = require("../routes/login");
+var logIn = require("../routes/auth/login");
 // var request = require('request');
 
 require('../app');
@@ -22,7 +22,7 @@ describe("login function", function () {
             }
         }, function (error, response, body) {
             console.log('body : ', body);
-             expect(body).toBe("login successfully");
+             expect(body).toBe(" ");
              done();
         });
 
