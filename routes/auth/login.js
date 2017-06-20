@@ -4,6 +4,17 @@ var q = require('q');
 require('mongoose-query-paginate');
 var userModel = require('../../models/user.js');
 var auth = require('basic-auth');
+var payload = { 
+                username: 'test',
+                password: 'test123',
+                role:'admin'  
+            };
+var config = require("./config/config");
+ 
+
+ 
+// encode 
+var token = jwt.encode(payload, config.secret);
 
 exports.userLogin = function (req, res) {
 
@@ -33,6 +44,12 @@ exports.userLogin = function (req, res) {
 exports.registerUser = function (req, res) {
 
     console.log(req.body);
+
+};
+
+generateToken = function(){
+
+console.log("token generated area");
 
 };
 
