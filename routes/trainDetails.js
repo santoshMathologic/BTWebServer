@@ -13,8 +13,9 @@ var trainDetailsObj = {
     saveBulkTrainDetails: function (data) {
         var deferred = q.defer();
         trainDetailsModel.insertMany(data, function (err, post) {
-            if (err) return err;
-            console.log("post"+post);
+            if (err) 
+                        console.log(err);
+            
             deferred.resolve("saveSuccessfully");
 
         });

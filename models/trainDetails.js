@@ -4,7 +4,7 @@ var trainDetailsSchema = mongoose.Schema({
     trainName:String,
     fromStation : String,
     toStation: String,
-    runningDays: [{type:String}],
+    runningDays: [],
     trainType: String,
     markDelete:{type:Boolean,default:false},
     createdTime: {type:Date , default:Date.now}

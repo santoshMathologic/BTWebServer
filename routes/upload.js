@@ -7,12 +7,13 @@ var router = express.Router();
 var Multer = require('multer');
 var Parse = require('csv-parse');
 var fs = require('fs');
-var trainDetailsRoutes = require("./routes/trainDetails.js");
+var trainDetailsRoutes = require("./trainDetails.js");
+var Enum = require('enum');
 
 
-var parsedata = [];
 var trainDetails = [];
-var runDays = [];
+var daysEnum = new Enum({'SUNDAY': 0, 'MONDAY':1, 'TUESDAY': 2, 'WEDNESDAY': 3, 'THURSDAY': 4, 'FRIDAY': 5,'SATURDAY':6});
+
 
 var uploadObj = {
 
@@ -32,8 +33,8 @@ var uploadObj = {
         parser.on("readable", function () {
             var record;
             while (record = parser.read()) {
-                parsedata.push(record);
-                parseToTrainDetails(parsedata);
+                
+                parseToTrainDetails(record);
             }
         });
 
@@ -51,33 +52,35 @@ var uploadObj = {
     }
 };
 
-parseToTrainDetails = function (data) {
+parseToTrainDetails = function (records) {
 
-
-    for (var row = 1; row < data.length; row++) {
-        var trainNo = data[row].Train_No;
-        var trainName = data[row].train_Name;
-        var from = data[row].Source;
-        var to = data[row].Destination;
-        var trainType = data[row].Train_Type;
-
+ 
+    trainDetails = [];
+        var trainNo = records.Train_No;
+        var trainName = records.train_Name;
+        var from = records.Source;
+        var to = records.Destination;
+        var trainType = records.Train_Type;
+        var runDays = [];
         var rdays = {
-            Friday: data[row].Friday,
-            Monday: data[row].Monday,
-            Saturday: data[row].Saturday,
-            Sunday: data[row].Sunday,
-            Thursday: data[row].Thursday,
-            Tuesday: data[row].Tuesday,
-            Wednesday: data[row].Wednesday
+            Friday: records.Friday,
+            Monday: records.Monday,
+            Saturday: records.Saturday,
+            Sunday: records.Sunday,
+            Thursday: records.Thursday,
+            Tuesday: records.Tuesday,
+            Wednesday: records.Wednesday
         };
+        daysEnum.get('SUNDAY');
         runDays.push(rdays);
         pushDataToTrainDetails(trainNo, trainName, from, to,runDays, trainType);
-        trainDetailsRoutes.saveBulkTrainDetails(trainDetails).then(function(result){
+        
+
+    
+ trainDetailsRoutes.saveBulkTrainDetails(trainDetails).then(function(result){
             console.log(result);
+            
         });
-
-    }
-
 
 };
 
