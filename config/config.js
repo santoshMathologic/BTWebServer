@@ -1,5 +1,5 @@
 var configobj = {
-    'secret': 'ilovescotchyscotch',
+    'secret': 'iloveBTWebServer',
 };
 
 
