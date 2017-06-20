@@ -22,7 +22,10 @@ exports.userLogin = function (req, res) {
         validate(credentials.name, credentials.pass).then(function (result) {
 
             if (credentials.name === result.username && credentials.pass === result.password) {
-                generateToken();
+                var token  = generateToken(result.username, result.role);
+                var decoded = jwt.decode(token, config.secret, false, 'HS512');
+                console.log(decoded);  
+              //  console.log(token);
                 res.status(200);
                 resultVal = {
                     "status": 200,
@@ -48,45 +51,48 @@ exports.registerUser = function (req, res) {
 
 generateToken = function (user, roleCode) {
     var d = new Date();
-    var expires = d.expireOn("7","moment");
+    var expires = d.expireOn("7", "other");
     var payload = { username: user, role: roleCode };
-    var token = jwt.encode({ payload: payload, exp: expires }, config.secret);
+    var token = jwt.encode({ payload: payload, exp: expires }, config.secret,'HS512');
     return token;
 };
 
 Date.prototype.expireOn = function (noOfDays, ch) {
+    switch (ch) {
+        case "MOMENT":
+        case "moment":
+            var d = moment().add(noOfDays, 'd').toDate();
+            break;
 
-    if (ch == 'moment') {
-        var date = moment()
-            .add(2, 'd') //replace 2 with number of days you want to add
-            .toDate(); //convert it to a Javascript Date Object if you like
+        case "OTHERS":
+        case "other":
+            this.setDate(this.getDate() + parseInt(noOfDays));
+            break;
     }
-
-
-    this.setDate(this.getDate() + parseInt(noOfDays));
     return this;
+
 };
 
 validate = function (username, pass) {
 
     var deferred = q.defer();
 
-     var query = userModel.findOne({ username: username, password: pass }).populate('roleId').exec(function(err, result) {
-       if (err) throw new Error("User Not found");
+    var query = userModel.findOne({ username: username, password: pass }).populate('roleId').exec(function (err, result) {
+        if (err) throw new Error("User Not found");
         else {
             if (result.length !== null) {
 
                 dbUserObj = { // spoofing a userobject from the DB. 
                     username: result._doc.username,
                     password: result._doc.password,
-                    role:result._doc.roleId._doc.name
+                    role: result._doc.roleId._doc.name
                 };
                 deferred.resolve(dbUserObj);
             } else {
                 deferred.resolve(result);
             }
         }
-});
-   
+    });
+
     return deferred.promise;
 };
