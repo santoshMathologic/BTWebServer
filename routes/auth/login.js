@@ -21,7 +21,7 @@ exports.userLogin = function (req, res) {
                 //console.log(decoded);
                 //  console.log(token);
                 res.cookie('x-access-token',tokenObj.token , { maxAge: tokenObj.expire,httpOnly:true} );
-                res.cookie('x-key', tokenObj.user);
+                res.cookie('x-key', tokenObj.username);
                 res.status(200);
                 resultVal = {
                     status: 200,
@@ -48,15 +48,15 @@ exports.registerUser = function (req, res) {
 
 };
 
-generateToken = function (user, roleCode) {
+generateToken = function (username, roleCode) {
     var d = new Date();
-    var expires = d.expireOn("7", "other");
-    var payload = { username: user, role: roleCode };
-    var token = jwt.encode({ payload: payload, exp: expires }, config.secret, 'HS512');
+    var expires = d.expireOn(7, "other");
+    var payload = { username: username, role: roleCode };
+    var token = jwt.encode({ payload: payload, expires: expires }, config.secret, 'HS512');
 
      return {
-         "user": user,
-         "roleCode":roleCode,
+         "username": username,
+         "role":roleCode,
          "expire" :expires,
          "token" : token
      };

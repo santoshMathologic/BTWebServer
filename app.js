@@ -4,7 +4,7 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
-
+var cors            =  require("cors");
 var index = require('./routes/index');
 var config = require('./config/config'); // get our config file
 var validation = require('./middlewares/validationMiddleware'); // get our config file
@@ -71,5 +71,26 @@ app.use(function(err, req, res, next) {
   res.status(err.status || 500);
   res.render('error');
 });
+
+
+
+app.use(cors({origin: 'http://localhost:3000'}));
+app.options('*', cors());
+
+
+app.all('/*', function (req, res, next) {
+  //res.header("Access-Control-Allow-Origin", req.headers.origin); // restrict it to the required domain
+  res.header("Access-Control-Allow-Origin", '*'); // restrict it to the required domain
+  res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS');
+  res.header('Access-Control-Allow-Credentials', true);
+  // Set custom headers for CORS
+  res.header('Access-Control-Allow-Headers', 'Content-type,Accept,X-Access-Token,X-Key,Cookie');
+  if (req.method == 'OPTIONS') {
+    res.status(200).end();
+  } else {
+    next();
+  }
+});
+
 
 module.exports = app;
