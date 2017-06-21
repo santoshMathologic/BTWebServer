@@ -18,8 +18,6 @@ exports.userLogin = function (req, res) {
             if (credentials.name === result.username && credentials.pass === result.password) {
                 var tokenObj = generateToken(result.username, result.role);
                 //var decoded = jwt.decode(token, config.secret, false, 'HS512');
-                //console.log(decoded);
-                //  console.log(token);
                 res.cookie('x-access-token',tokenObj.token , { maxAge: tokenObj.expire,httpOnly:true} );
                 res.cookie('x-key', tokenObj.username);
                 res.status(200);
