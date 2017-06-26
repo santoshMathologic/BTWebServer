@@ -94,7 +94,7 @@ validate = function (username, pass) {
                 };
                 deferred.resolve(dbUserObj);
             }
-             deferred.resolve("User Not Found ");
+             deferred.resolve("User Not Found in the DB ");
         }
     });
 
