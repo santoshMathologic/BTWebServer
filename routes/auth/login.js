@@ -9,7 +9,9 @@ var moment = require('moment');
 moment().format();
 var config = require("../../config/config");
 
-exports.userLogin = function (req, res) {
+exports.userLogin = function (req, res,next) {
+
+    
 
     var credentials = auth(req);
     if (credentials !== null || Object.keys(credentials).length === 0) {

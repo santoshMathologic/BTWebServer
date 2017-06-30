@@ -4,8 +4,8 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
-var cors            =  require("cors");
-var index = require('./routes/index');
+var cors = require("cors");
+var routes = require('./routes/index');
 var config = require('./config/config'); // get our config file
 var validation = require('./middlewares/validationMiddleware'); // get our config file
 
@@ -27,12 +27,23 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.set('superSecret', config.secret); // secret variable
 
-app.use('/', index);
+
+app.all('/*', function (req, res, next) {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS');
+  res.header('Access-Control-Allow-Headers', 'Content-Type,Authorization');
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Accept");
+  next();
+});
+
+app.use(cors());
+
+app.use('/', routes);
 
 //app.use(validation({ option1: '1', option2: '2' }))
 
 // catch 404 and forward to error handler
-app.use(function(req, res, next) {
+app.use(function (req, res, next) {
   var err = new Error('Not Found');
   err.status = 404;
   next(err);
@@ -43,8 +54,8 @@ var raw_port = process.env.PORT;
 var port = normalizePort(raw_port || '4000');
 app.set('port', port);
 
-var server=app.listen(port, function () {
-  console.log('Server running at http://127.0.0.1:'+port);
+var server = app.listen(port, function () {
+  console.log('Server running at http://127.0.0.1:' + port);
 });
 
 function normalizePort(val) {
@@ -62,7 +73,7 @@ function normalizePort(val) {
 }
 
 // error handler
-app.use(function(err, req, res, next) {
+app.use(function (err, req, res, next) {
   // set locals, only providing error in development
   res.locals.message = err.message;
   res.locals.error = req.app.get('env') === 'development' ? err : {};
@@ -74,23 +85,20 @@ app.use(function(err, req, res, next) {
 
 
 
-app.use(cors({origin: 'http://localhost:3000'}));
-app.options('*', cors());
+//app.use(cors({origin: 'http://localhost:3000'}));
+//cors({credentials: true, origin: 'http://localhost:3000'});
+//app.options('*', cors());
+
+//app.use(cors({origin: 'http://localhost:3000'}));
 
 
-app.all('/*', function (req, res, next) {
-  //res.header("Access-Control-Allow-Origin", req.headers.origin); // restrict it to the required domain
-  res.header("Access-Control-Allow-Origin", '*'); // restrict it to the required domain
-  res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS');
-  res.header('Access-Control-Allow-Credentials', true);
-  // Set custom headers for CORS
-  res.header('Access-Control-Allow-Headers', 'Content-type,Accept,X-Access-Token,X-Key,Cookie');
-  if (req.method == 'OPTIONS') {
-    res.status(200).end();
-  } else {
-    next();
-  }
-});
+
+
+
+
+
+
+
 
 
 module.exports = app;
