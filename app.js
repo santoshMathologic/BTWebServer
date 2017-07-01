@@ -12,6 +12,7 @@ var validation = require('./middlewares/validationMiddleware'); // get our confi
 
 var db = require("./database/db");
 
+
 var app = express();
 
 // view engine setup
