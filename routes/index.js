@@ -10,6 +10,7 @@ var login = require("./auth/login.js");
 var reg = require("./auth/login.js");
 var upload = require("./upload.js");
 var dvd = require("./dvd.js");
+var lOut = require("./logout.js");
 
 var uploadDest = Multer({ 
                 dest: './uploads' 
@@ -29,21 +30,24 @@ router.get('/login', login.userLogin);
 router.post('/registeration', reg.registerUser);
 
 // users routes
-router.post('/api/v1/user', user.create);
+router.post('/api/v2/user', user.create);
 
-router.get('/api/v1/user', user.getUsers);
+router.get('/api/v2/user', user.getUsers);
 
 // roles routes
-router.get('/api/v1/role', role.get);
-router.post('/api/v1/role', role.create);
+router.get('/api/v2/role', role.get);
+router.post('/api/v2/role', role.create);
 
 // upload routes
 
-router.post('/api/v1/uploads', uploadDest.single("file"), upload.parseFile);
+router.post('/api/v2/uploads', uploadDest.single("file"), upload.parseFile);
 
 
 // dvd routes
-router.post('/api/v1/dvd', dvd.create);
-router.get('/api/v1/dvd', dvd.get);
+router.post('/api/v2/dvd', dvd.create);
+router.get('/api/v2/dvd', dvd.get);
+
+router.get('/logout',lOut.logOut);
+
 
 module.exports = router;

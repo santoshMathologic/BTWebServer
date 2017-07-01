@@ -3,13 +3,13 @@ mongoose.Promise = global.Promise;
 
 var options = {
   db: { native_parser: true },
-  server: { poolSize: 5 },
-  replset: { rs_name: 'myReplicaSetName' },
+  server: { poolSize: 200 },
+  replset: { rs_name: '' },
   user: '',
   pass: ''
 };
 
-mongoose.connect('mongodb://127.0.0.1/bt?maxPoolSize=200',options, function(error) {
+mongoose.connect('mongodb://127.0.0.1/bt',options, function(error) {
     if (error) {
         console.log('Cant connect to db', error);
     } else {

@@ -3,3 +3,17 @@ extends layout
 block content
   h1= title
   p Welcome to #{title}
+
+
+  form
+  .form-group
+    label(for='email') Email address:
+    input#email.form-control(type='email')
+  .form-group
+    label(for='pwd') Password:
+    input#pwd.form-control(type='password')
+  .checkbox
+    label
+      input(type='checkbox')
+      |  Remember me
+  button.btn.btn-default(type='submit') Submit
