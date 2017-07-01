@@ -14,6 +14,20 @@ exports.userLogin = function (req, res,next) {
     
 
     var credentials = auth(req);
+
+        var username = credentials.name || '';
+        var password = credentials.pass || '';
+
+        if (username === '' || password === '') {
+            res.status(401);
+            res.json({
+                "status": 401,
+                "message": "Invalid credentials"
+            });
+            return;
+        }
+
+
     if (credentials !== null || Object.keys(credentials).length === 0) {
         validate(credentials.name, credentials.pass).then(function (result) {
 
