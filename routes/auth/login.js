@@ -50,7 +50,7 @@ exports.registerUser = function (req, res) {
 
 generateToken = function (username, roleCode) {
     var d = new Date();
-    var expires = d.expireOn(7, "other");
+    var expires = d.expireOn(1, "other");
     var payload = { username: username, role: roleCode };
     var token = jwt.encode({ payload: payload, expires: expires }, config.secret, 'HS512');
 
