@@ -9,6 +9,7 @@ var role = require("./role.js");
 var login = require("./auth/login.js");
 var reg = require("./auth/login.js");
 var upload = require("./upload.js");
+var dvd = require("./dvd.js");
 
 var uploadDest = Multer({ 
                 dest: './uploads' 
@@ -40,5 +41,9 @@ router.post('/api/v1/role', role.create);
 
 router.post('/api/v1/uploads', uploadDest.single("file"), upload.parseFile);
 
+
+// dvd routes
+router.post('/api/v1/dvd', dvd.create);
+router.get('/api/v1/dvd', dvd.get);
 
 module.exports = router;
