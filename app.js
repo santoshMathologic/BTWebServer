@@ -39,8 +39,8 @@ app.all('/*', function (req, res, next) {
 
 app.use(cors());
 
-app.all('/api/v2/*',validation);  // Validation all routes before user
-// app.all('/api/v1/*', [require('./middlewares/validateRequest')]);
+//app.all('/api/v2/*',validation);  // Validation all routes before user
+app.all('/api/v2/*', [require('./middlewares/validationMiddleware')]);
 app.use('/',routes);
 
 
