@@ -4,6 +4,7 @@
 var userModel = require('../models/user.js');
 var jwt = require("jwt-simple");
 var config = require("../config/config");
+var timecal = require("../library/timeCalculator");
 
 module.exports = function (req, res, next) {
 
@@ -13,6 +14,12 @@ module.exports = function (req, res, next) {
 
   if (req.url.indexOf('/api/v2/') >= 0) {
     if (typeof userkey !== "undefined" && typeof usertoken !== 'undefined') {
+
+       var dateTimeObj ={
+         time:"12:23",
+         day:2,
+       }; 
+      timecal.convertDateTimeObjToNumber(dateTimeObj,"+");
 
       if (decodeToken(usertoken)) {
         res.status(400);
