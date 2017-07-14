@@ -40,7 +40,7 @@ router.post('/api/v2/role', role.create);
 
 // upload routes
 
-router.post('/api/v2/uploads', uploadDest.single("file"), upload.parseFile);
+router.post('/api/v2/uploads/timetable', uploadDest.single("file"), upload.parseFile);
 
 
 // dvd routes
