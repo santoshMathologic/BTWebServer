@@ -21,6 +21,10 @@ app.set('view engine', 'jade');
 
 // uncomment after placing your favicon in /public
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
+
+//app.use(bodyParser.json());
+//app.use(bodyParser.urlencoded({ extended: false }));
+
 app.use(logger('dev'));
 app.use(bodyParser.json({limit: '50mb'}));
 app.use(bodyParser.urlencoded({limit: '50mb', extended: true}));
@@ -29,18 +33,26 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.set('superSecret', config.secret); // secret variable
 
 
-app.all('/*', function (req, res, next) {
-  res.header("Access-Control-Allow-Origin", "*");
-  res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS');
-  res.header('Access-Control-Allow-Headers', 'Content-Type,Authorization');
-  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Accept");
-  next();
+
+app.all('/*', function(req, res, next) {
+  // CORS headers
+  res.header("Access-Control-Allow-Origin", req.headers.origin); // restrict it to the required domain
+  //res.header("Access-Control-Allow-Origin", '*'); // restrict it to the required domain
+  res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,PATCH,OPTIONS');
+  res.header('Access-Control-Allow-Credentials', true);
+  // Set custom headers for CORS
+  res.header('Access-Control-Allow-Headers', 'Content-type,Accept,X-Access-Token,X-Key,Cookie');
+  if (req.method == 'OPTIONS') {
+    res.status(200).end();
+  } else {
+    next();
+  }
 });
 
 app.use(cors());
 
 //app.all('/api/v2/*',validation);  // Validation all routes before user
-//app.all('/api/v2/*', [require('./middlewares/validationMiddleware')]);
+app.all('/api/v2/*', [require('./middlewares/validationMiddleware')]);
 app.use('/',routes);
 
 
